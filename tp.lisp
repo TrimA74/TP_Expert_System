@@ -1,3 +1,5 @@
+;SEBIRE branche
+
 (defun longueur (l)
 	(cond
 			((null l) 0 ) ; si l est null on renvoie 0
