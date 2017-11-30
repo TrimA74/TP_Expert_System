@@ -2,56 +2,63 @@
 
 
 (defstruct waste
-  material
-  volume
-  dirt_type
+  	material
+  	volume
+  	dirt_type
 )
 
 (defstruct selectiveTrash 
-  container_list
+  	container_list
     
 )
 
 (defstruct container
 	color 
-  max_capacity
-  waste_amount
- )
-
-( setq green_container (make-container
-  	:color '"green"
-  	:max_capacity 100
-    :waste_amount 0
-  )
+   	max_capacity
+   	waste_amount
+   	authorized_material_list
+   	unauthorized_dirt_list
 )
 
-( setq yellow_container (make-container
-  	:color '"yellow"
-  	:max_capacity 100
-    :waste_amount 0
-  )
+(setq green_container (make-container
+	:color "green"
+	:max_capacity "100"
+   	:waste_amount "0"
+   	:authorized_material_list ("glass")
+   	:unauthorized_dirt("chimic liquid" "grease")
+   	)
 )
 
-( setq blue_container (make-container
-  	:color '"blue"
-  	:max_capacity 100
-    :waste_amount 0
-
-  )
+(setq yellow_container (make-container
+	:color "yellow"
+	:max_capacity "100"
+   	:waste_amount "0"
+   	:authorized_material_list ("carton" "metal" "plastic")
+   	:unauthorized_dirt("chimic liquid" "grease")
+   	)
 )
 
-( setq waste (make-waste 
-  	:material '"Plastic"
-    :volume 1
-    :dirt_type nil 
-  )
-) 
+(setq blue_container (make-container
+	:color "blue"
+	:max_capacity "100"
+   	:waste_amount "0"
+   	:authorized_material_list ("paper")
+   	:unauthorized_dirt()
+   	)
+)
+
+(setq waste (make-waste 
+	:material "Paper"
+   	:volume "1"
+   	:dirt_type "clean" 
+   	)
+)   
 
 
 ;Rule list
 (defvar LR '())
 
-; DÃ©finition des structures
+; Définition des structures
 (defstruct rule name condition action weight)
 (defstruct fact name attributes is_a)
 
@@ -66,13 +73,13 @@
     LR)
 )
 
-; Tester si une rÃ¨gle est applicable 
+; Tester si une règle est applicable 
 (defun applicable (x)
-    (eval (get x 'condition ) )) ; on Ã©value la condition  retourn bool
+    (eval (get x 'condition ) )) ; on évalue la condition  retourn bool
 
-;Savoir si une rÃ¨gle a dÃ©jÃ  Ã©tÃ© appliquÃ©e
+;Savoir si une règle a déjà été appliquée
 (defun appliquee (x)
-    (get x 'appliquee) ) ; rÃ©cupÃ¨re la propriÃ©tÃ© appliquÃ©e
+    (get x 'appliquee) ) ; récupère la propriété appliquée
 
 ; findActivable
 (defun findActivable ()
@@ -114,7 +121,7 @@
 		((or (>= (container-max_capacity green_container) (container-waste_amount green_container))
 			(>= (container-max_capacity blue_container) (container-waste_amount blue_container))
 			(>= (container-max_capacity yellow_container) (container-waste_amount yellow_container))
-            (not (null containerChoosen))  ;on s'arrete quand la poubelle choisi est dÃ©fini
+            (not (null containerChoosen))  ;on s'arrete quand la poubelle choisi est défini
                                             ;poubelle peut etre blue, yellow, green...ou other(aucune de nos poubelles correspondent)
 		)t)
 		
@@ -123,7 +130,7 @@
 )
 
 
-; Moteur d'infÃ©rences
+; Moteur d'inférences
 ; -----------------------
 (defun run ()
     (cond 
@@ -132,9 +139,8 @@
             (null (conflits)) (print 'problem_not_solve_or_nothing_applicable) nil  
         )
         ( t 
-            (mapc 'appliquer (conflictset)) ; on applique toutes les rÃ¨gles
+            (mapc 'appliquer (conflictset)) ; on applique toutes les règles
             (run)
         )
     )
 )
-
