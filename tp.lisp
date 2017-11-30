@@ -138,16 +138,5 @@
   )
 ) 
 
-;stop condition
-(setq stopCondition
-	(cond
-		
-		((or (>= green_container.max_capacity green_container.waste_amount)
-			(>= blue_container.max_capacity blue_container.waste_amount)
-			(>= yellow_container.max_capacity yellow_container.waste_amount)
-		)t)
-		
 
-	)
-)
 
