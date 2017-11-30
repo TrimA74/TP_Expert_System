@@ -100,16 +100,12 @@
 	color 
   max_capacity
   waste_amount
-  authorized_material_list
-  unauthorized_dirt_list
-)
+ )
 
 ( setq green_container (make-container
   	:color '"green"
   	:max_capacity 100
     :waste_amount 0
-    :authorized_material_list '("glass")
-    :unauthorized_dirt_list '("chimic liquid" "grease")
   )
 )
 
@@ -117,8 +113,6 @@
   	:color '"yellow"
   	:max_capacity 100
     :waste_amount 0
-    :authorized_material_list '("carton" "metal" "plastic")
-    :unauthorized_dirt_list '("chimic liquid" "grease")
   )
 )
 
@@ -126,8 +120,7 @@
   	:color '"blue"
   	:max_capacity 100
     :waste_amount 0
-    :authorized_material_list '("paper")
-    :unauthorized_dirt_list '()
+
   )
 )
 
