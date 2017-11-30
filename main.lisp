@@ -58,7 +58,7 @@
 ;Rule list
 (defvar LR '())
 
-; DÃ©finition des structures
+; Définition des structures
 (defstruct rule name condition action weight)
 (defstruct fact name attributes is_a)
 
@@ -73,13 +73,13 @@
     LR)
 )
 
-; Tester si une rÃ¨gle est applicable 
+; Tester si une règle est applicable 
 (defun applicable (x)
-    (eval (get x 'condition ) )) ; on Ã©value la condition  retourn bool
+    (eval (get x 'condition ) )) ; on évalue la condition  retourn bool
 
-;Savoir si une rÃ¨gle a dÃ©jÃ  Ã©tÃ© appliquÃ©e
+;Savoir si une règle a déjà été appliquée
 (defun appliquee (x)
-    (get x 'appliquee) ) ; rÃ©cupÃ¨re la propriÃ©tÃ© appliquÃ©e
+    (get x 'appliquee) ) ; récupère la propriété appliquée
 
 ; findActivable
 (defun findActivable ()
@@ -121,7 +121,7 @@
 		((or (>= (container-max_capacity green_container) (container-waste_amount green_container))
 			(>= (container-max_capacity blue_container) (container-waste_amount blue_container))
 			(>= (container-max_capacity yellow_container) (container-waste_amount yellow_container))
-            (not (null containerChoosen))  ;on s'arrete quand la poubelle choisi est dÃ©fini
+            (not (null containerChoosen))  ;on s'arrete quand la poubelle choisi est défini
                                             ;poubelle peut etre blue, yellow, green...ou other(aucune de nos poubelles correspondent)
 		)t)
 		
@@ -130,7 +130,7 @@
 )
 
 
-; Moteur d'infÃ©rences
+; Moteur d'inférences
 ; -----------------------
 (defun run ()
     (cond 
@@ -139,7 +139,7 @@
             (null (conflits)) (print 'problem_not_solve_or_nothing_applicable) nil  
         )
         ( t 
-            (mapc 'appliquer (conflictset)) ; on applique toutes les rÃ¨gles
+            (mapc 'appliquer (conflictset)) ; on applique toutes les règles
             (run)
         )
     )
