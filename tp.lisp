@@ -23,21 +23,21 @@
 ;init variables
 (defvar green_container)
 ( setq green_container (make-container
-  	:color '"green"
+  	:color 'green
   	:max_capacity 100
     :waste_amount 0
   )
 )
 (defvar yellow_container)
 ( setq yellow_container (make-container
-  	:color '"yellow"
+  	:color 'yellow
   	:max_capacity 100
     :waste_amount 0
   )
 )
 (defvar blue_container)
 ( setq blue_container (make-container
-  	:color '"blue"
+  	:color 'blue
   	:max_capacity 100
     :waste_amount 0
 
@@ -88,7 +88,7 @@
 
 ; Tester si une règle est applicable 
 (defun applicable (x)
-    (print (rule-condition x))
+    ;(print (rule-condition x))
     (eval (rule-condition x))                                   ;(get x 'condition ) )) ; on évalue la condition  retourn bool
 )    
 
@@ -102,19 +102,35 @@
 (defun findActivable ()
         (setq rulesList nil)
         (mapc 
-            (lambda (x) 
-                (print x)
-                (print (applicable x))
+            (lambda (x)
+
+                ;(print (applied x))
+                ;(print (applicable x))
                 (cond
-                    ((and (not (null (applied x))) (applicable x))
+                    ((and (null (applied x)) (applicable x))
                     (setq rulesList (cons x rulesList)))
                 )
                 
             )
         LR)
-        (print rulesList)
+        ;(print rulesList)
         rulesList
 )
+;to get rule by name
+(defun findRuleByName( myname)
+    (setq r nil)
+    (mapc
+        (lambda (x)
+            (cond 
+                ((eq (rule-name x) myname) (setq r x) ) 
+            )
+        )
+    LR)
+    r
+
+)
+
+
 ; adding rules
 
 ; r1 
@@ -127,7 +143,7 @@
 ;; condition -> si waste.dirt_type == clean && r1.applied==true
 ;; action -> mettre dans la glassTrash
 ;; weight 13
-(newrule 'r2 '(and (eq (waste-dirt_type waste1) 'clean ) (applied r1)) '(setq containerChosen 'blue_container) 1)
+(newrule 'r2 '(and (eq (waste-dirt_type waste1) 'clean ) (applied (findRuleByName 'r1))) '(setq containerChosen 'blue_container) 1)
 
 
 
@@ -136,7 +152,7 @@
 
 ;stop condition
 (setq stopCondition
-	(cond
+	'(cond
 		
 		((or (<= (container-max_capacity green_container) (container-waste_amount green_container))
 			(<= (container-max_capacity blue_container) (container-waste_amount blue_container))
