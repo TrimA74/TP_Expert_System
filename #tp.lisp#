@@ -1,4 +1,6 @@
+
 ;fact base
+
 
 (defstruct waste
   material
@@ -63,7 +65,7 @@
 ( setq waste1 (make-waste 
   	:material 'glass
     :volume 1
-    :dirt_type 'clean
+    :dirt_type 'chimic_liquid
 	:object_type 'bottle
   )
 ) 
@@ -80,7 +82,7 @@
 
 
 
-; Définition des structures
+; DÃ©finition des structures
 (defstruct rule name condition action weight applied)
 
 ; Fonctions de manipulations
@@ -98,22 +100,22 @@
 ;(defun put (symbol prop value)     ;marche pas
 ;    (setf (get symbol prop) value))    
 
-(defun myApply (x) ;@x une règle
-    (eval (rule-action x)) ; on évalue l'action de x
-    (setf (rule-applied x) t) ;(put x 'applied t) ) ; mets true dans la propriété appliquee de @x
+(defun myApply (x) ;@x une rÃ¨gle
+    (eval (rule-action x)) ; on Ã©value l'action de x
+    (setf (rule-applied x) t) ;(put x 'applied t) ) ; mets true dans la propriÃ©tÃ© appliquee de @x
 )
 
-; Tester si une règle est applicable 
+; Tester si une rÃ¨gle est applicable 
 (defun applicable (x)
     ;(print (rule-condition x))
-    (eval (rule-condition x))                                   ;(get x 'condition ) )) ; on évalue la condition  retourn bool
+    (eval (rule-condition x))                                   ;(get x 'condition ) )) ; on Ã©value la condition  retourn bool
 )    
 
-;Savoir si une règle a déjà été appliquée
+;Savoir si une rÃ¨gle a dÃ©jÃ  Ã©tÃ© appliquÃ©e
 (defun applied (x)
     (rule-applied x)
     ;(get x 'applied) 
-) ; récupère la propriété appliquée
+) ; rÃ©cupÃ¨re la propriÃ©tÃ© appliquÃ©e
 
 ; findActivable
 (defun findActivable ()
@@ -287,8 +289,7 @@
 		((or (<= (container-max_capacity green_container) (container-waste_amount green_container))
 			(<= (container-max_capacity blue_container) (container-waste_amount blue_container))
 			(<= (container-max_capacity yellow_container) (container-waste_amount yellow_container))
-            (<= (container-max_capacity default_container) (container-waste_amount default_container))
-            (not (null containerChosen))  ;on s'arrete quand la poubelle choisi est défini
+            (not (null containerChosen))  ;on s'arrete quand la poubelle choisi est dÃ©fini
                                             ;poubelle peut etre blue, yellow, green...ou other(aucune de nos poubelles correspondent)
 		)t)
 		
@@ -297,16 +298,16 @@
 )
 
 
-; Moteur d'inférences
+; Moteur d'infÃ©rences
 ; -----------------------
 (defun run ()
     (cond 
-        ( (eval stopCondition) (print 'motor_stop) containerChosen )
+        ( (eval stopCondition) (print 'motor_stop) (print containerChosen ))
         ( 
             (null (findActivable)) (print 'problem_not_solve_or_nothing_applicable) nil 
         )
         ( t 
-            (mapc 'myApply (findActivable)) ; on applique toutes les règles
+            (mapc 'myApply (findActivable)) ; on applique toutes les rÃ¨gles
             (run)
         )
     )
